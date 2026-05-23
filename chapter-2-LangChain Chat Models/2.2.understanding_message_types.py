@@ -1,7 +1,7 @@
 import getpass
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 
 if "GOOGLE_API_KEY" not in os.environ:
     os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google AI API key: ")
@@ -15,8 +15,22 @@ model_google = ChatGoogleGenerativeAI(
     api_key=os.environ["GOOGLE_API_KEY"],
 )
 
-systemInstruction = SystemMessage(content="Reply every prompt in bangla Language.")
-userMessage = HumanMessage(content="what is the independence day of Bangladesh?")
+systemInstruction = SystemMessage(content="Reply every prompt in bangla Language.") # Here role type is: system
+userMessage = HumanMessage(content="what is the independence day of Bangladesh?") # Here role type is: human
+
+"""
+When LangChain sends messages to the LLM, it converts them into something like:
+[
+    {
+        "type": "system",
+        "content": "Reply every prompt in bangla Language."
+    },
+    {
+        "type": "human",
+        "content": "what is the independence day of Bangladesh?"
+    }
+]
+"""
 
 response = model_google.invoke([
     systemInstruction,
