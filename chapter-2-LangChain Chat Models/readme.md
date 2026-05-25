@@ -546,3 +546,91 @@ A Rate Limiter controls the frequency of requests sent to the model provider. It
 # 30-Second Interview Answer
 
 When configuring a model in LangChain, I typically use Temperature to control creativity, Max Tokens to limit response length, Timeout to prevent long-running requests, Max Retries to handle temporary failures, Stop Sequences to control output structure, and a Rate Limiter to avoid exceeding provider API limits. Together, these settings help balance quality, reliability, performance, and cost.
+
+---
+# Structured Output
+
+# What is Structured Output in LLM Applications?
+
+Structured Output is a technique that forces an LLM to return data in a predefined format, such as JSON, a Pydantic model, or a TypedDict, instead of generating free-form text.
+
+### Why do we use Structured Output?
+
+In many AI applications, the response is not intended for a human to read directly. Instead, the output needs to be consumed by code, APIs, databases, or workflow systems. Structured Output ensures that the response follows a predictable schema that applications can process reliably.
+
+### Common Use Cases
+
+1. Information Extraction
+
+   * Extract names, emails, phone numbers, skills, and dates from unstructured text.
+
+2. Resume parsing
+
+3. Invoice extraction
+
+4. Contact form processing
+
+5. Lead generation
+
+6. Tool Calling and Agents
+
+   * Generate parameters required for API calls or tool execution.
+
+7. Database Operations
+
+   * Convert user requests into structured records for storage.
+
+8. Classification Tasks
+
+   * Return sentiment, intent, categories, or labels.
+
+9. LangGraph State Management
+
+   * Update graph state with validated fields.
+
+### Example
+
+Instead of returning:
+
+"The user's name is John and he is 30 years old."
+
+Structured Output returns:
+
+{
+"name": "John",
+"age": 30
+}
+
+which can be directly used by the application.
+
+### Benefits
+
+* Reliable parsing
+* Reduced post-processing
+* Better validation
+* Easier integration with APIs and databases
+* Improved agent workflows
+
+### In LangChain
+
+Structured Output can be implemented using:
+
+* Pydantic Models
+* TypedDict
+* JSON Schema
+
+and configured using:
+
+with_structured_output()
+
+### When Not to Use It
+
+Structured Output is generally unnecessary when generating content intended for human consumption, such as:
+
+* Blog posts
+* Emails
+* Documentation
+* LinkedIn posts
+* General explanations
+
+In short, use Structured Output whenever the response will be consumed by software rather than directly by a human.
