@@ -634,3 +634,7 @@ Structured Output is generally unnecessary when generating content intended for 
 * General explanations
 
 In short, use Structured Output whenever the response will be consumed by software rather than directly by a human.
+
+---
+# Streaming Response
+
