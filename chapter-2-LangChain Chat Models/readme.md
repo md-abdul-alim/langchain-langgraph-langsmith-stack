@@ -638,3 +638,151 @@ In short, use Structured Output whenever the response will be consumed by softwa
 ---
 # Streaming Response
 
+---
+
+# LangChain Prompt Caching
+![alt text](2.9.2.langchain_prompt_caching.png)
+## What is Prompt Caching?
+
+Prompt caching is a technique used to reduce the cost and latency of Large Language Model (LLM) calls by reusing previously processed prompt content.
+
+When a large portion of a prompt remains unchanged across multiple requests, the model provider can cache that content and avoid reprocessing it repeatedly.
+
+This is especially useful for:
+
+* Long system prompts
+* Large knowledge bases
+* Repeated instructions
+* Multi-turn conversations
+* Agent workflows
+
+---
+
+## Why Use Prompt Caching?
+
+### Cost Reduction
+
+Cached tokens are often billed at a lower rate than newly processed tokens.
+
+### Faster Responses
+
+The model can reuse previously processed prompt segments, reducing inference time.
+
+### Better Scalability
+
+Applications handling large volumes of requests can significantly reduce overall LLM costs.
+
+---
+
+## How Prompt Caching Works
+
+A typical prompt contains:
+
+1. System Instructions
+2. Context / Documents
+3. User Query
+
+Example:
+
+```text
+System: You are an expert software engineer.
+
+Context:
+[Large documentation of 50,000 tokens]
+
+User:
+Explain prompt engineering.
+```
+
+If the system prompt and documentation remain unchanged, only the user question changes.
+
+Instead of processing the entire prompt every time, the model provider can reuse the cached portion and process only the new user input.
+
+---
+
+## Prompt Caching in LangChain
+
+LangChain itself does not perform LLM provider prompt caching automatically.
+
+Instead, LangChain can:
+
+* Send prompts to providers that support prompt caching.
+* Help organize prompts so static content remains reusable.
+* Combine with LangChain caching mechanisms to avoid unnecessary model calls.
+
+The actual caching behavior depends on the model provider.
+
+---
+
+## Common Use Cases
+
+### RAG Applications
+
+Cache:
+
+* System prompt
+* Retrieved knowledge base structure
+
+Only process:
+
+* New user questions
+
+### AI Agents
+
+Cache:
+
+* Agent instructions
+* Tool descriptions
+
+Only process:
+
+* Current task
+
+### Customer Support Bots
+
+Cache:
+
+* Company policies
+* Product documentation
+
+Only process:
+
+* Customer messages
+
+---
+
+## Best Practices
+
+### Keep Static Content Separate
+
+Place reusable instructions and context in a consistent section of the prompt.
+
+### Minimize Changes
+
+Small modifications to cached content may invalidate the cache.
+
+### Cache Large Contexts
+
+Prompt caching provides the most value when working with large prompts.
+
+### Monitor Cost Savings
+
+Track token usage and cache-hit rates provided by your LLM vendor.
+
+---
+
+## Prompt Caching vs LangChain Response Caching
+
+| Feature                  | Prompt Caching          | Response Caching           |
+| ------------------------ | ----------------------- | -------------------------- |
+| Purpose                  | Reuse prompt processing | Reuse final responses      |
+| Managed By               | LLM Provider            | LangChain/Application      |
+| Reduces Token Processing | Yes                     | Yes                        |
+| Returns Previous Answer  | No                      | Yes                        |
+| Useful For               | Large static prompts    | Repeated identical queries |
+
+---
+
+## Key Takeaway
+
+Prompt caching improves performance and reduces costs by reusing previously processed prompt content. In LangChain applications, the feature primarily depends on the underlying LLM provider, while LangChain helps structure prompts and workflows to maximize cache effectiveness.
