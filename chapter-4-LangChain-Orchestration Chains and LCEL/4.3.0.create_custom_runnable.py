@@ -29,3 +29,12 @@ async def async_reverse_text_function(text: str) -> str:
     print(f"Async result: {aresult}")  # Output: Async result: !dlroW ,olleH
 
 asyncio.run(async_reverse_text_function("Hello, World!"))
+
+batch_async_inputs = ["Hello", "World"]
+
+async def anync_batch_reverse_text():
+    batch_async_result = await reverse_text_runnable.abatch(batch_async_inputs)
+    print(f"Async batch result: {batch_async_result}")  # Output: Async batch result: ['olleH', 'dlroW']
+
+
+asyncio.run(anync_batch_reverse_text())
