@@ -19,11 +19,10 @@ reverse_text_runnable = RunnableLambda(reverse_text_function)
 result = reverse_text_runnable.invoke("Hello, World!")
 print(result, "\n")  # Output: !dlroW ,olleH
 
-
 text_batch_result = reverse_text_runnable.batch(["Hello", "World"])
 print(text_batch_result, "\n")  # Output: ['olleH', 'dlroW']
 
-# Demo 3: Async functions to runnables
+# Demo 3: Asynchronous functions to runnables
 async def async_reverse_text_function(text: str) -> str:
     aresult = await reverse_text_runnable.ainvoke(text)
     print(f"Async result: {aresult}")  # Output: Async result: !dlroW ,olleH
