@@ -31,3 +31,5 @@ result = reverse_text_runnable.invoke("Hello, World!")
 print(result)  # Output: !dlroW ,olleH
 
 
+text_batch_result = reverse_text_runnable.batch(["Hello", "World"])
+print(text_batch_result)  # Output: ['olleH', 'dlroW']
