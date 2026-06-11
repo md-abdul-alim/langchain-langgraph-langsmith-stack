@@ -43,8 +43,13 @@ result_low_tokens = base_chain.invoke(
     config=low_tokens_config
 )
 
-print(f"Fact about the moon (Max Tokens=10): {result_low_tokens}", '\n\n')
+# or
+result_alt_low_tokens = base_chain.with_config(low_tokens_config).invoke({'topic': "The Moon"})
+
+print(f"Fact about the moon (Max Tokens=10): {result_low_tokens}\n{result_alt_low_tokens}", '\n\n')
 print('==='*10)
+
+
 def my_listener_on_start(run: Run): 
     """Logs when the chain starts, accessing data from the Run object"""
     print(f"Listener START for '{run.name}' (Run ID: {run.id})", '\n')
