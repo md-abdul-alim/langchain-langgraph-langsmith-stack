@@ -3,7 +3,7 @@ from load_env import load_env
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableConfig
+from langchain_core.runnables import RunnableConfig, ConfigurableField
 from langchain_core.tracers.schemas import Run
 
 load_env()
@@ -14,13 +14,37 @@ model = ChatOpenAI(
     temperature=0.7,
     max_tokens=100,
     openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+).configurable_fields(
+    max_tokens=ConfigurableField(
+        id='llm_token_cap',
+        name='LLM Maximum Response Tokens',
+        description='Maximum number of tokens to be used for response'
+    ),
 )
 
-prompt = ChatPromptTemplate.from_template("Give me a very short, simple fact about {topic}")
+prompt = ChatPromptTemplate.from_template("Give simple fact about {topic}")
 parser = StrOutputParser()
 
 base_chain = prompt | model | parser
 
+print('--- Invoking with default token limit ---')
+result_default = base_chain.invoke({'topic': "The Moon"})
+print(f'Fact about the moon (Max Tokens=default): {result_default}')
+
+print('--- Invoking with a low token limit ---')
+low_tokens_config = RunnableConfig(
+    configurable={
+        'llm_token_cap': 10
+    }
+)
+
+result_low_tokens = base_chain.invoke(
+    {"topic": "The Moon"},
+    config=low_tokens_config
+)
+
+print(f"Fact about the moon (Max Tokens=10): {result_low_tokens}", '\n\n')
+print('==='*10)
 def my_listener_on_start(run: Run): 
     """Logs when the chain starts, accessing data from the Run object"""
     print(f"Listener START for '{run.name}' (Run ID: {run.id})", '\n')
