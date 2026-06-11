@@ -6,3 +6,4 @@ For openrouter api key: https://openrouter.ai/workspaces/default/keys
 LCEL = LangChain Expression Language
 
 Doc: https://www.promptingguide.ai/introduction
+different between invoke() vs ainvoke()
