@@ -1,5 +1,10 @@
+import os
 from langchain.agents import create_agent
 from langchain.tools import tool
+from load_env import load_env
+from langchain_openai import ChatOpenAI
+
+load_env()
 
 @tool
 def get_account_balance(account_type: str) -> str:
@@ -102,15 +107,25 @@ Guidelines:
 - Format monetary values clearly
 """
 
+model = ChatOpenAI(
+    openai_api_base="https://openrouter.ai/api/v1",
+    model_name="openai/gpt-oss-120b:free",
+    temperature=0.7,
+    max_tokens=100,
+    openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+)
+tools = [
+    get_account_balance,
+    get_recent_transactions,
+    calculate_budget
+]
+
 agent = create_agent(
-    model="openai/gpt-oss-120b:free",
-    tools=[
-        get_account_balance,
-        get_recent_transactions,
-        calculate_budget
-    ],
+    model=model,
+    tools=tools,
     system_prompt=SYSTEM_PROMPT
 )
+
 
 def main():
     print('=' * 50)
@@ -119,14 +134,20 @@ def main():
 
     # Test 1: check balance
     balance_message = "What's my checking account balance?"
-    
-    print(f"\nQuery: {balance_message}")
-    response = agent.invoke(
-        {
-            "messages": [{"role": "user", "content": balance_message}]
-        }
-    )
 
+    print(f"\nQuery: {balance_message}")
+    response = agent.invoke({
+        "messages": [{"role": "user", "content": balance_message}]
+    })
+
+    print(f"Agent: {response['messages'][-1].content}")
+
+    # Test 2: Multi-tool query
+    multi_tool_prompt = "Show me my savings balance and recent transactions"
+    print(f"\nQuery: {multi_tool_prompt}")
+    response = agent.invoke({
+        "messages": [{"role": "user", "content": multi_tool_prompt}]
+    })
     print(f"Agent: {response['messages'][-1].content}")
 
 
