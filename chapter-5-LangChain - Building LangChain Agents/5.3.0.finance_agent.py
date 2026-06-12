@@ -126,7 +126,6 @@ agent = create_agent(
     system_prompt=SYSTEM_PROMPT
 )
 
-
 def main():
     print('=' * 50)
     print("Stage 1: Simple Finance Assistant")
@@ -140,7 +139,7 @@ def main():
         "messages": [{"role": "user", "content": balance_message}]
     })
 
-    print(f"Agent: {response['messages'][-1].content}")
+    print(f"Agent response 1: {response['messages'][-1].content}")
 
     # Test 2: Multi-tool query
     multi_tool_prompt = "Show me my savings balance and recent transactions"
@@ -148,7 +147,15 @@ def main():
     response = agent.invoke({
         "messages": [{"role": "user", "content": multi_tool_prompt}]
     })
-    print(f"Agent: {response['messages'][-1].content}")
+    print(f"Agent response 2: {response['messages'][-1].content}")
+
+    # Test 3: Budget calculation
+    budget_prompt = "I make $5000/month. How much should i spend on hoursing?"
+    print(f"\nQuery: {budget_prompt}")
+    response = agent.invoke({
+        "messages": [{"role": "user", "content": budget_prompt}]
+    })
+    print(f"Agent response 3: {response['messages'][-1].content}")
 
 
 if __name__ == "__main__":
