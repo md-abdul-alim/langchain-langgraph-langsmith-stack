@@ -7,3 +7,5 @@ LCEL = LangChain Expression Language
 
 Doc: https://www.promptingguide.ai/introduction
 different between invoke() vs ainvoke()
+
+we can not steam an llm response which return structured response.
