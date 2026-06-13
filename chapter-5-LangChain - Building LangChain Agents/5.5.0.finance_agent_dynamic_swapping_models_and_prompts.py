@@ -3,6 +3,7 @@ from langchain.agents import create_agent
 from langchain.tools import tool, ToolRuntime
 from load_env import load_env
 from langchain_openai import ChatOpenAI
+from langchain.chat_models import init_chat_model
 from langchain.agents.middleware import (
     wrap_model_call,
     dynamic_prompt,
@@ -14,28 +15,27 @@ from finance_user_data import USER_DATABASE
 from finance_prompts import BASE_PROMPT, PREMIUM_PROMPT, PLATINUM_PROMPT, GUIDELINES, SYSTEM_PROMPT
 load_env()
 
-basic_model = ChatOpenAI(
-    openai_api_base="https://openrouter.ai/api/v1",
-    model_name="openai/gpt-oss-120b:free",
+os.environ["OPENROUTER_API_KEY"]=os.environ["OPEN_ROUTER_API_KEY"]
+
+basic_model = init_chat_model(
+    model="openai/gpt-oss-120b:free",
+    model_provider="openrouter",
+    # configurable_fields = os.environ["OPEN_ROUTER_API_KEY"],
     temperature=0.5,
-    max_tokens=512,
-    openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+    max_tokens=512
 )
 
-premium_model = ChatOpenAI(
-    openai_api_base="https://openrouter.ai/api/v1",
-    model_name="openrouter/auto",
-    temperature=0.6,
-    max_tokens=2048,
-    openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+premium_model = init_chat_model(
+    model="openrouter/owl-alpha",
+    model_provider="openrouter",
+    # api_key=os.environ["OPEN_ROUTER_API_KEY"],
+    max_tokens=2048
 )
 
-platinum_model = ChatOpenAI(
-    openai_api_base="https://openrouter.ai/api/v1",
-    model_name="google/gemma-4-31b-it:free",
-    temperature=0.7,
-    max_tokens=4096,
-    openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+platinum_model = init_chat_model(
+    model="google/gemma-4-31b-it:free",
+    model_provider="openrouter",
+    # api_key=os.environ["OPEN_ROUTER_API_KEY"],
 )
 
 @dataclass
@@ -270,7 +270,7 @@ def main():
         {
             "messages": [{"role": "user", "content": financial_situation_query}]
         },
-        context=carol_context
+        context=bob_context
     )
     print(f"Agent response 4: {response['messages'][-1].content}")
 
