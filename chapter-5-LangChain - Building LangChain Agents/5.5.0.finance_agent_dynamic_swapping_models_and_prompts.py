@@ -20,7 +20,6 @@ os.environ["OPENROUTER_API_KEY"]=os.environ["OPEN_ROUTER_API_KEY"]
 basic_model = init_chat_model(
     model="openai/gpt-oss-120b:free",
     model_provider="openrouter",
-    # configurable_fields = os.environ["OPEN_ROUTER_API_KEY"],
     temperature=0.5,
     max_tokens=512
 )
@@ -28,14 +27,12 @@ basic_model = init_chat_model(
 premium_model = init_chat_model(
     model="openrouter/owl-alpha",
     model_provider="openrouter",
-    # api_key=os.environ["OPEN_ROUTER_API_KEY"],
     max_tokens=2048
 )
 
 platinum_model = init_chat_model(
     model="google/gemma-4-31b-it:free",
     model_provider="openrouter",
-    # api_key=os.environ["OPEN_ROUTER_API_KEY"],
 )
 
 @dataclass
@@ -270,7 +267,7 @@ def main():
         {
             "messages": [{"role": "user", "content": financial_situation_query}]
         },
-        context=bob_context
+        context=alice_context
     )
     print(f"Agent response 4: {response['messages'][-1].content}")
 
