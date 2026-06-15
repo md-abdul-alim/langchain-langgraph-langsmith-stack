@@ -54,6 +54,7 @@ def update_animals(current, new):
 
 class StateWithReducer(TypedDict):
     count: Annotated[int, update_count]
+    # animals: Annotated[List[str], update_animals] # or
     animals: Annotated[List[str], add]
 
 run_example(
