@@ -44,3 +44,21 @@ run_example(
     initial_state=initial_state
 )
 
+# With Reducer
+
+def update_count(current, new):
+    return current + new
+
+def update_animals(current, new):
+    return current + new
+
+class StateWithReducer(TypedDict):
+    count: Annotated[int, update_count]
+    animals: Annotated[List[str], add]
+
+run_example(
+    name="With Reducer",
+    state_schema=StateWithReducer,
+    node_func=node_to_update,
+    initial_state=initial_state
+)
