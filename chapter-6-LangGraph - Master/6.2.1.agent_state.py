@@ -72,3 +72,19 @@ def create_dict_state():
 
 build_and_run_graph(dict, create_dict_state())
 
+# 2. Using TypedDict
+
+def custom_add(current: int, new: int) -> int:
+    return current + new
+
+
+class TypedDictState(TypedDict):
+    messages: Annotated[List[str], add_messages]
+    step_count: Annotated[int, custom_add]
+    private_data: str
+
+build_and_run_graph(TypedDictState, {
+    "messages": [],
+    "step_count": 0,
+    "private_data": ""
+})
