@@ -88,3 +88,12 @@ build_and_run_graph(TypedDictState, {
     "step_count": 0,
     "private_data": ""
 })
+
+# 3. Using Pydantic
+
+class PydanticState(BaseModel):
+    messages: Annotated[List[BaseMessage], add_messages] = Field(default_factory=list)
+    step_count: Annotated[int, custom_add] = Field(default=0)
+    private_data: str = Field(default="")
+
+build_and_run_graph(PydanticState, PydanticState())
