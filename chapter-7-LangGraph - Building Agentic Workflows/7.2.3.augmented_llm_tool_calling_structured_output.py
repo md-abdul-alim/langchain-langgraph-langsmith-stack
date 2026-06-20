@@ -49,3 +49,21 @@ result = chain.invoke({
 })
 
 print(json.dumps(result.model_dump(), indent=2))
+
+"""
+{
+  "product_name": "wireless mouse",
+  "sentiment": "positive",
+  "rating": 4,
+  "pros": [
+    "Incredible battery life (only charged once in 4 weeks)",
+    "Ergonomic design fits hand perfectly",
+    "Responsive buttons"
+  ],
+  "cons": [
+    "Scroll wheel is stiff and makes clicking sounds",
+    "Relatively expensive compared to similar models"
+  ],
+  "summary": "The reviewer enjoys the wireless mouse\u2019s battery life, ergonomics, and button responsiveness, but notes a stiff scroll wheel, clicking noises, and a high price. Overall rating is 4 out of 5 stars."
+}
+"""
