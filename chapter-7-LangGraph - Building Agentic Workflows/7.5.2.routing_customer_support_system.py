@@ -191,10 +191,10 @@ refund_prompt = "I'd like to request a refund for my recent purchase. It doesn't
 general_prompt = "What features are included in the Pro plan?"
 
 result = graph.invoke({
-    "customer_query": billing_prompt,
+    "customer_query": technical_prompt,
     "query_category": "",
     "response": "",
-    "tools_used": "",
+    "tools_used": ""
 })
 
 print(f"="*70)
