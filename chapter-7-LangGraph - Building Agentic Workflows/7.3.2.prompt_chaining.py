@@ -69,13 +69,13 @@ def fact_check(state: ContentState) -> ContentState:
         provide a brief report.
     """
 
-    fact_check_result = llm.invoke(prompt)
+    fact_check_result = llm.invoke(prompt).content
     
     print("=== STEP 2: Fact Check Complete ===")
     print(fact_check_result[:250] +"...\n")
 
     return {
-        "fact_check_result": fact_check_result
+        "fact_check_results": fact_check_result
     }
 
 def improve_content(state: ContentState) -> ContentState:
@@ -91,7 +91,7 @@ def improve_content(state: ContentState) -> ContentState:
         Revise the blog post to address the feedback while maintaining engaging writing. Keep it around 200 words.
     """
 
-    improved_content = llm.invoke(prompt)
+    improved_content = llm.invoke(prompt).content
     
     print("=== STEP 3: Content Improved ===")
     print(improved_content[:250] +"...\n")
@@ -115,7 +115,7 @@ def format_output(state: ContentState) -> ContentState:
         Output the formatted HTML.
     """
 
-    final_draft = llm.invoke(prompt)
+    final_draft = llm.invoke(prompt).content
     
     print("=== STEP 4: Formatted for Publication ===")
     print(final_draft[:300] +"...\n")
