@@ -136,7 +136,7 @@ def evaluate_description(state: OptimizationState) -> OptimizationState:
     print(f"EVALUATOR: Reviewing Description...")
     print(f"{'='*70}")
 
-    evaluator_llm = llm.with_structured_output(Evaluation)
+    evaluator_llm = gemini_llm.with_structured_output(Evaluation)
 
     prompt = f"""
     Evaluate this product description objectively:
