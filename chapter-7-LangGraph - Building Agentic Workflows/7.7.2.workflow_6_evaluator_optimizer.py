@@ -1,4 +1,5 @@
 import os
+import json
 from load_env import load_env
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -177,11 +178,11 @@ def evaluate_description(state: OptimizationState) -> OptimizationState:
 
     print(f"\nStrengths:")
     for strenght in evaluation.strengths:
-        print("- {strenght}")
+        print(f"- {strenght}")
 
     print(f"\nWeaknesses:")
     for weakness in evaluation.weaknesses:
-        print("- {weakness}")
+        print(f"- {weakness}")
 
     print(f"\nFeedback: {evaluation.specific_feedback}")
 
