@@ -29,6 +29,7 @@ class WorkerState(TypedDict):
 class ResearchPlan(BaseModel):
     sources: List[str] = Field(
         description="List of specific research sources/aspects to investigate",
+        min_length=3,
         max_length=5
     )
     reasoning: str = Field(
@@ -45,8 +46,8 @@ def plan_research(state: OverallState) -> OverallState:
 
     planner_llm = llm.with_structured_output(ResearchPlan)
 
-    prompt = f""""
-    Your are a research strategist planning a comprehensive investigation.
+    prompt = f"""
+    You are a research strategist planning a comprehensive investigation.
 
     Research Topic: {state['research_topic']}
 
@@ -55,12 +56,12 @@ def plan_research(state: OverallState) -> OverallState:
 
     Each source should be:
         - specific and focused on a distinct aspect
-        - Relevant to the overall topic
-        - Complementary to other sources (minimal overlap)
-        - Concrete enough to guide targeted research
+        - relevant to the overall topic
+        - complementary to other sources (minimal overlap)
+        - concrete enough to guide targeted research
 
     Examples of good sources:
-        - "Clinical trial results and efficancy data"
+        - "Clinical trial results and efficacy data"
         - "Economic impact and cost-benefit analysis"
         - "Regulatory framework and compliance requirements"
         - "Patient outcomes and quality of life metrics"
@@ -70,7 +71,7 @@ def plan_research(state: OverallState) -> OverallState:
     """
 
     research_plan = planner_llm.invoke(prompt)
-
+    
     print(f"Orchestrator generated {len(research_plan.sources)} research sources")
 
     for i, source in enumerate(research_plan.sources, 1):
