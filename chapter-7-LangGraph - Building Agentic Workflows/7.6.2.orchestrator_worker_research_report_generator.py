@@ -191,14 +191,14 @@ def synthesize_report(state: OverallState) -> OverallState:
 def create_research_workers(state: OverallState):
     print("DISPATCHER: Creating research workers dynamically...")
 
-    return {
+    return [
         Send("research_worker", {
             "source": source,
             "worker_id": i + 1,
             "research_topic": state["research_topic"]
         })
         for i, source in enumerate(state["sources"]) 
-    }
+    ]
 
 
 # Build Graph
