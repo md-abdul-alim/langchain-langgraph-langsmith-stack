@@ -20,7 +20,7 @@ load_env()
 #     openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
 # )
 llm = ChatOpenAI(
-    model="qwen-turbo",  # You can also use "qwen-plus", "qwen-max", "qwen-turbo", etc.
+    model="qwen-plus",  # You can also use "qwen-plus", "qwen-max", "qwen-turbo", etc.
     api_key=os.getenv("ALIBABA_API_KEY"),
     base_url=os.getenv("ALIBABA_OPENAI_URL"),
 )
@@ -172,8 +172,8 @@ thread_id = "doc_review_001"
 config = {"configurable": {"thread_id": thread_id}}
 
 initial_input = {
-    "document_title": "Q4 Sales Report",
-    "document_content": "Sales went up this quarter. We did good. Revenue increased.",
+    "document_title": "Is Messi the GOAT?",
+    "document_content": "Yes, he won the 2022 World Cup with Argentina, cementing his legacy forever.",
     "processing_stage": "submitted",
     "quality_score": 0,
     "issues_found": [],
@@ -208,4 +208,23 @@ print("Current Graph State")
 print("-"* 50)
 
 current_state = graph.get_state(config)
-print_snapshot_data(current_state)
+
+# print_snapshot_data(current_state)
+
+print("-"* 50)
+print("Full State History")
+print("-"* 50)
+
+history = list(graph.get_state_history(config))
+
+total_checkpoints = len(history)
+print(f"Total Checkpoints: {total_checkpoints}")
+
+print("Checkpoint Timeline (newest to oldest)")
+print("="*50)
+
+for i, checkpoint in enumerate(history):
+    print(f"\n\n{'*'*30}")
+    print(f"Checkpoint Snapshot: {total_checkpoints - i}:")
+    print(f"{'*'*30}")
+    print_snapshot_data(checkpoint)
