@@ -209,8 +209,11 @@ print("-"* 50)
 
 current_state = graph.get_state(config)
 
+# 1st Test
 # print_snapshot_data(current_state)
 
+# 2nd Test
+"""
 print("-"* 50)
 print("Full State History")
 print("-"* 50)
@@ -228,3 +231,32 @@ for i, checkpoint in enumerate(history):
     print(f"Checkpoint Snapshot: {total_checkpoints - i}:")
     print(f"{'*'*30}")
     print_snapshot_data(checkpoint)
+"""
+
+
+# 3rd Test
+""" Replaying State from analysis step"""
+# input [0] -> start [1] -> intake [2] -> analyze [3]
+print('\n\n ----Replaying State from analysis step---')
+history = list(graph.get_state_history(config))
+
+analyze_checkpoint = history[3]
+
+analyze_checkpoint_id = analyze_checkpoint.config["configurable"]["checkpoint_id"]
+
+replay_config = {
+    "configurable": {
+        "thread_id": thread_id,
+        "checkpoint_id": analyze_checkpoint_id
+    }
+}
+
+
+print(f"\n Replaying from: {analyze_checkpoint_id}...")
+print("This will re-evaluate: analyze -> revise -> analyze -> finalize")
+
+replay = graph.invoke(None, replay_config)
+
+print(f"✅ Replay Complete")
+print(f"Final Stage: {replay['processing_stage']}")
+print(f"Quality Score: {replay['quality_score']}/10")
