@@ -11,11 +11,16 @@ from langchain_core.messages import HumanMessage
 
 load_env()
 
+# llm = ChatOpenAI(
+#     openai_api_base="https://openrouter.ai/api/v1",
+#     model_name="openai/gpt-oss-120b:free",
+#     temperature=0.7,
+#     openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+# )
 llm = ChatOpenAI(
-    openai_api_base="https://openrouter.ai/api/v1",
-    model_name="openai/gpt-oss-120b:free",
-    temperature=0.7,
-    openai_api_key=os.environ["OPEN_ROUTER_API_KEY"],
+    model="qwen-plus",  # You can also use "qwen-max", "qwen-turbo", etc.
+    api_key=os.getenv("ALIBABA_API_KEY"),
+    base_url=os.getenv("ALIBABA_OPENAI_URL"),
 )
 
 def chatbot(state: MessagesState):
