@@ -207,9 +207,8 @@ print("-"* 50)
 print("Current Graph State")
 print("-"* 50)
 
-current_state = graph.get_state(config)
-
 # 1st Test
+# current_state = graph.get_state(config)
 # print_snapshot_data(current_state)
 
 # 2nd Test
@@ -237,6 +236,7 @@ for i, checkpoint in enumerate(history):
 # 3rd Test
 """ Replaying State from analysis step"""
 # input [0] -> start [1] -> intake [2] -> analyze [3]
+"""
 print('\n\n ----Replaying State from analysis step---')
 history = list(graph.get_state_history(config))
 
@@ -260,3 +260,32 @@ replay = graph.invoke(None, replay_config)
 print(f"✅ Replay Complete")
 print(f"Final Stage: {replay['processing_stage']}")
 print(f"Quality Score: {replay['quality_score']}/10")
+"""
+
+""" Updating State """
+
+current_state = graph.get_state(config)
+
+print("-"*50)
+print("Current State (Before Manual Override)")
+print("-"*50)
+print_snapshot_data(current_state)
+
+print("\n Manual Override: Document Approval")
+
+graph.update_state(
+    config,
+    {
+        "quality_score": 9,
+        "approved": True,
+        "processing_stage": "manually_approved",
+        "issues_found": []
+    }
+)
+
+updated_state = graph.get_state(config)
+
+print("-"*50)
+print("Updated State (After Manual Override)")
+print("-"*50)
+print_snapshot_data(updated_state)
