@@ -25,7 +25,7 @@ load_env()
 
 os.environ["OPENROUTER_API_KEY"]=os.environ["OPEN_ROUTER_API_KEY"]
 os.environ["LANGSMITH_API_KEY"]=""
-os.environ["LANGSMITH_ENDPOINT"]="https://aws.api.smith.langchain.com"
+os.environ["LANGSMITH_ENDPOINT"]=""
 os.environ["LANGSMITH_PROJECT"]="Finance Agent"
 os.environ["LANGCHAIN_TRACING_V2"]="true"
 os.environ["LANGSMITH_WORKSPACE_ID"]=""
