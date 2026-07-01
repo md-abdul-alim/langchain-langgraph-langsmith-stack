@@ -19,3 +19,9 @@ https://mcp.so/
 
 What is middleware? Need to learn middleware use in agent.
 differece between ChatOpenAI vs init_chat_model
+
+https://www.langchain.com/blog/what-is-an-agent
+
+
+https://files.cdn.thinkific.com/file_uploads/967498/attachments/ecd/3cc/6d3/LangChain_Academy_-_Introduction_to_LangGraph_-_Motivation.pdf
+
