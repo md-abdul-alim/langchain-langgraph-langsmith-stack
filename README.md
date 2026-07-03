@@ -34,3 +34,10 @@ What is ReAct?
         - act -> let the model decide to call a tool or return a response.
         - observe -> pass the tool output back to the model
         - repeat -> let the model decide to call a tool or return a response.
+
+
+How many way we can define state?
+    - 3 ways:
+        - TypedDict
+        - dataclass
+        - pydantic
