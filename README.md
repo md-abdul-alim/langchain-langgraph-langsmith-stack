@@ -41,3 +41,7 @@ How many way we can define state?
         - TypedDict
         - dataclass
         - pydantic
+
+
+What is the use of reducer? what problem is solve?
+    - 
