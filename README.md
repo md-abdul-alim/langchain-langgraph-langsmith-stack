@@ -45,3 +45,35 @@ How many way we can define state?
 
 What is the use of reducer? what problem is solve?
     - 
+
+Difference between InMemorySaver, MemorySaver?
+    -
+
+# What is memory?
+    - Memory is a cognitive function that allows people to store, retrieve, and use information to understand their present and future.
+
+# Short Term VS Long Term Memory
+
+|  | Short-Term | Long-Term |
+|----------|----------|----------|
+| Scope    | Within session (thread)     | Across session (thread)     |
+| Example use-case    | Persist conversational history, allow interruptions in a chat (if user is idle or to allow human-in-the-loop)   | Remember information about a specific user across all chat sessions.   |
+| LangGraph usage    | Checkpointer     | Store     |
+|
+
+# What is the type of memory?
+|       | Semantic | Episodic | Procedural |
+|-------|----------|----------|----------|
+|       | Facts    | Memories     | Instructions     |
+| Human  | Bike model I have    | Bike rides I took     | Motor skills     |
+| Agent  | Facts about a user    | Past agent actions    | Agent's system prompt |
+|
+
+# When do you want to update memories?
+    - In the Hot-path
+    - In the Backgroun
+|           |             Type              |       Pro             |          Con           |
+|-----------|-------------------------------|-----------------------|------------------------|
+| Hot Path  |   During runtime (ChatGPT)    | Real-time updates with transparency for user|     Can affect UX/Latency and degrade performance   |
+| Background          | As a separate process   | Lower risk of UX / Performance degradation |  Frequency of memory writing needs to be tuned   |
+|
