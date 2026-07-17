@@ -77,3 +77,8 @@ Difference between InMemorySaver, MemorySaver?
 | Hot Path  |   During runtime (ChatGPT)    | Real-time updates with transparency for user|     Can affect UX/Latency and degrade performance   |
 | Background          | As a separate process   | Lower risk of UX / Performance degradation |  Frequency of memory writing needs to be tuned   |
 |
+
+# What is context window (Tokens)
+
+# Difference between different vector database? when to use which database?
+  
